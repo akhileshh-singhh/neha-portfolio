@@ -1,0 +1,47 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sign in | {{ site_title|default:"Website manager" }}</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'admin_cms/login.css' %}">
+</head>
+<body>
+<main class="lg">
+  <section class="lg-art">
+    <span class="lg-mark">NV</span>
+    <div>
+      <p class="lg-eyebrow">Neha Varma · Website manager</p>
+      <h1>Your website,<br>your <i>words</i>.</h1>
+      <p class="lg-sub">Change any text, photo, colour or section of your portfolio from one calm place. Nothing to code, and you can see where every change lands.</p>
+      <ul class="lg-points">
+        <li><span>🧱</span> Edit every block of the page</li>
+        <li><span>🎨</span> Recolour the whole site with a live preview</li>
+        <li><span>🗺</span> A visual map of what sits where</li>
+      </ul>
+    </div>
+    <p class="lg-foot">Social media · Strategy · Creative</p>
+  </section>
+  <section class="lg-form">
+    <form method="post" action="{{ app_path }}" autocomplete="on">
+      {% csrf_token %}
+      <h2>Welcome back</h2>
+      <p class="lg-hint">Sign in with your admin username and password.</p>
+      {% if form.errors and not form.non_field_errors %}<p class="lg-err">Please fix the errors below.</p>{% endif %}
+      {% if form.non_field_errors %}{% for e in form.non_field_errors %}<p class="lg-err">{{ e }}</p>{% endfor %}{% endif %}
+      {% if user.is_authenticated %}<p class="lg-err">You are signed in as {{ user.get_username }} but cannot open this page. Sign in with another account?</p>{% endif %}
+      <label for="id_username">Username</label>
+      <input type="text" name="username" id="id_username" value="{{ form.username.value|default:'' }}" autofocus autocapitalize="none" autocomplete="username" required>
+      <label for="id_password">Password</label>
+      <div class="lg-pass"><input type="password" name="password" id="id_password" autocomplete="current-password" required>
+        <button type="button" onclick="var i=document.getElementById('id_password');i.type=i.type==='password'?'text':'password';this.textContent=i.type==='password'?'Show':'Hide'">Show</button></div>
+      <input type="hidden" name="next" value="{{ next }}">
+      <button class="lg-go" type="submit">Sign in</button>
+      <a class="lg-back" href="/">← Back to the website</a>
+    </form>
+  </section>
+</main>
+</body>
+</html>

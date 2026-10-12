@@ -1,0 +1,4 @@
+{% load cms_tags %}
+{% if s.layout == "mosaic" or s.layout == "grid" %}<section class="mos mos--{{ s.layout }} {{ s.css_class }}" {% include "cms/sections/_attrs.html" %}>{% else %}<section class="sl gold {{ s.css_class }}" {% include "cms/sections/_attrs.html" %}>{% endif %}
+{% for i in s.vis_items %}{% include "cms/sections/_ph.html" with img=i.image alt=i.title text=i.title|default:"Add photo" cls="" %}{% endfor %}
+</section>

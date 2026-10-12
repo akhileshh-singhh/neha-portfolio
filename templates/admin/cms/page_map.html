@@ -1,0 +1,30 @@
+{% extends "admin/base_site.html" %}
+{% block breadcrumbs %}<div class="breadcrumbs"><a href="{% url 'admin:index' %}">Home</a> › <a href="{% url 'admin:cms_section_changelist' %}">Page sections</a> › Page map</div>{% endblock %}
+{% block content %}
+<div class="lead-box">
+    <p>This is your website from top to bottom, one card per block. Find the part you want to change, then press <b>Edit</b>.</p>
+  <div class="pm-bar">
+    {% for p in pages %}<a class="chip {% if p == current %}on{% endif %}" href="?page={{ p.pk }}">{{ p.title }}</a>{% endfor %}
+    <a class="chip ghost" href="{% url 'admin:cms_section_changelist' %}?page__id__exact={{ current.pk }}">↕ Re-order by dragging</a>
+    <a class="chip ghost" href="{% url 'admin:cms_section_add' %}?page={{ current.pk }}">+ Add a block</a>
+  </div>
+</div>
+{% if not blocks %}
+<div class="dash-alert"><div><b>No blocks in the database yet.</b><br>Go back to the dashboard and press “Import default content”.</div><a class="dash-cta" href="{% url 'admin:index' %}">Dashboard</a></div>
+{% endif %}
+<div class="pm-grid">
+{% for b in blocks %}
+  <article class="pm-card{% if not b.visible %} is-hidden{% endif %}">
+    <header>
+      <span class="pm-num">{{ forloop.counter }}</span>
+      <span class="pm-ico">{{ b.ui.icon|default:"▫️" }}</span>
+      <div class="pm-title"><b>{{ b.label }}</b><small>Type: {{ b.ui.name|default:b.get_kind_display }}{% if not b.visible %} · hidden on the website{% endif %}</small></div>
+      <a class="pm-edit" href="{% url 'admin:cms_section_change' b.pk %}">Edit</a>
+    </header>
+    <div class="pv-scroll pm-scroll"><div class="pv-scale"><iframe loading="lazy" src="{% url 'cms:block_preview' b.pk %}" title="{{ b.label }}" tabindex="-1" onload="cmsFit(this, this.parentElement, 1120)"></iframe></div></div>
+    <footer>{{ b.ui.where }}</footer>
+  </article>
+{% endfor %}
+</div>
+<script>window.addEventListener('resize',function(){document.querySelectorAll('.pm-card iframe').forEach(function(f){ if(f.contentDocument&&f.contentDocument.body) cmsFit(f,f.parentElement,1120); });});</script>
+{% endblock %}

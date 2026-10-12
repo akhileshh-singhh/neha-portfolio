@@ -1,0 +1,2 @@
+{% load cms_tags %}
+<section class="sl olive {{ s.css_class }}" {% include "cms/sections/_attrs.html" %}><h2 class="big">{{ s.heading|rich }}{% if s.subheading %}<i>{{ s.subheading }}</i>{% endif %}</h2></section>

@@ -1,0 +1,2 @@
+{% load cms_tags %}
+<div class="cap {{ s.css_class }}" {% include "cms/sections/_attrs.html" %}><b>{{ s.heading|rich }}</b>{{ s.body|rich }}</div>

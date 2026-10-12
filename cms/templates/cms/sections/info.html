@@ -1,0 +1,8 @@
+{% load cms_tags %}
+<section class="sl t2 {{ s.css_class }}" {% include "cms/sections/_attrs.html" %}>
+<div class="top">{% if site.linkedin_url %}<a href="{{ site.linkedin_url }}" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:4px"><i class="bi bi-linkedin"></i> {{ site.display_name }}</a>{% else %}<span>{{ site.display_name }}</span>{% endif %}<span>{{ s.eyebrow }}</span><span>{{ s.subheading }}</span></div>
+<div class="row">{% for i in s.vis_items %}{% if forloop.first %}{% include "cms/sections/_ph.html" with img=i.image alt=i.title text=i.title|default:"Add photo" cls="p1" %}{% else %}{% include "cms/sections/_ph.html" with img=i.image alt=i.title text=i.title|default:"Add photo" cls="p2" %}{% endif %}{% endfor %}
+<div class="c">{% if site.email %}&#9993; <a href="mailto:{{ site.email }}">{{ site.email }}</a><br>{% endif %}{% if site.phone %}&#9742; <a href="{{ site.phone_href }}" style="text-decoration:none">{{ site.phone }}</a>{% endif %}</div></div>
+<div class="big cp">{{ s.heading|rich }}</div>
+<div class="dj">{{ s.footnote }}</div>
+</section>

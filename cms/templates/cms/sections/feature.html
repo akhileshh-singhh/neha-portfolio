@@ -1,0 +1,5 @@
+{% load cms_tags %}
+<section class="sl red{% if s.layout == 'image-right' %} red--flip{% endif %} {{ s.css_class }}" {% include "cms/sections/_attrs.html" %}>
+{% include "cms/sections/_ph.html" with img=s.image alt=s.image_alt text=s.placeholder_text|default:"Add photo" cls="" %}
+<h2>{{ s.heading|rich }}{% if s.subheading %}<br><small style="font-size:14px">{{ s.subheading }}</small>{% endif %}</h2>
+</section>

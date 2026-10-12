@@ -1,0 +1,3 @@
+{% load cms_tags %}
+<section class="tp {{ s.css_class }}" {% include "cms/sections/_attrs.html" %}><div><h2>{{ s.heading|rich }}</h2>{% if s.body %}<p>{{ s.body|rich }}</p>{% endif %}</div>
+{% include "cms/sections/_ph.html" with img=s.image alt=s.image_alt|default:s.heading text=s.placeholder_text|default:"Add template mockup" cls="" %}</section>

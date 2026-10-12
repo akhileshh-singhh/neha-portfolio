@@ -1,0 +1,7 @@
+{% extends "admin/change_list.html" %}
+{% block object-tools-items %}
+<li><a class="addlink" href="{% url 'admin:cms_section_map' %}">🗺 Visual page map</a></li>
+{{ block.super }}
+{% endblock %}
+{% block content_title %}<h1>Page sections</h1>
+<p class="lead">Every block of the website, top to bottom. <b>Drag the ⠿ handle</b> to change the order on the site, tick <b>Visible</b> to show or hide a block, click a block to edit its text, photos and design.</p>{% endblock %}

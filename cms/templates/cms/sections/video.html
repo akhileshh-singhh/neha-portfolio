@@ -1,0 +1,8 @@
+{% load cms_tags %}
+<div class="vid {{ s.css_class }}" {% include "cms/sections/_attrs.html" %}>
+{% if s.video_file %}<video class="vid-frame" controls preload="metadata"{% if s.image %} poster="{{ s.image.url }}"{% endif %}><source src="{{ s.video_file.url }}"></video>
+{% elif s.video_url|video_embed %}<iframe class="vid-frame" src="{{ s.video_url|video_embed }}" title="{{ s.heading }}" allow="accelerometer; encrypted-media; picture-in-picture; fullscreen" allowfullscreen loading="lazy"></iframe>
+{% elif s.video_url %}<video class="vid-frame" controls preload="metadata"{% if s.image %} poster="{{ s.image.url }}"{% endif %} src="{{ s.video_url }}"></video>
+{% else %}<div class="ph{% if s.image %} has-img{% endif %}">{% if s.image %}<img src="{{ s.image.url }}" alt="{{ s.image_alt }}" loading="lazy">{% else %}&#9654; {{ s.heading }}{% endif %}</div>{% endif %}
+{% if s.subheading %}<small>{{ s.subheading }}</small>{% endif %}
+</div>

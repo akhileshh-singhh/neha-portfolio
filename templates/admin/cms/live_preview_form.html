@@ -1,0 +1,34 @@
+{% extends "admin/change_form.html" %}
+{% block extrahead %}{{ block.super }}{% if theme_live %}{{ theme_live|json_script:"theme-live" }}{% endif %}{% endblock %}
+{% block content %}
+<div class="split">
+  <div class="split-form">{{ block.super }}</div>
+  <aside class="split-preview" id="sitePreview">
+    <div class="pv-head"><b>{{ preview_title }}</b>
+      <span><button type="button" class="pv-btn" data-act="reload">↻ Reload</button>
+      <button type="button" class="pv-btn" data-act="size">⤢ Bigger</button>
+      <a class="pv-btn" href="/" target="_blank">Open ↗</a></span></div>
+    <div class="pv-scroll"><div class="pv-scale"><iframe src="/" title="Website preview" tabindex="-1"></iframe></div></div>
+    <p class="pv-hint">{{ preview_hint }}</p>
+  </aside>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var box = document.getElementById('sitePreview'), frame = box.querySelector('iframe'), scale = box.querySelector('.pv-scale');
+  var liveEl = document.getElementById('theme-live'), map = liveEl ? JSON.parse(liveEl.textContent) : {};
+  function fit(){ window.cmsFit && window.cmsFit(frame, scale, 1280); }
+  frame.addEventListener('load', function(){ fit(); applyAll(); });
+  window.addEventListener('resize', fit);
+  box.querySelector('[data-act=reload]').onclick = function(){ frame.contentWindow.location.reload(); };
+  box.querySelector('[data-act=size]').onclick = function(e){ box.classList.toggle('big'); e.target.textContent = box.classList.contains('big') ? '⤡ Smaller' : '⤢ Bigger'; setTimeout(fit, 50); };
+  function apply(id){
+    var input = document.getElementById(id), spec = map[id]; if (!input || !spec || !frame.contentDocument) return;
+    var parts = spec.split('|'), v = (input.value || '').trim(), root = frame.contentDocument.documentElement;
+    if (!v) root.style.removeProperty(parts[0]); else root.style.setProperty(parts[0], v + (parts[1] || ''));
+    if (id === 'id_container_width' || id === 'id_base_font_size' || id === 'id_line_height' || id === 'id_font_family') setTimeout(fit, 30);
+  }
+  function applyAll(){ Object.keys(map).forEach(apply); }
+  Object.keys(map).forEach(function(id){ var el = document.getElementById(id); if (el) ['input','change'].forEach(function(ev){ el.addEventListener(ev, function(){ apply(id); }); }); });
+});
+</script>
+{% endblock %}

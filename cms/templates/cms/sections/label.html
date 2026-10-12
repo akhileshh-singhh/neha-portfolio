@@ -1,0 +1,2 @@
+{% load cms_tags %}
+<section class="tr {{ s.css_class }}" {% include "cms/sections/_attrs.html" %}><h2>{{ s.heading|rich }}</h2>{% if s.subheading %}<small>{{ s.subheading }}</small>{% endif %}</section>

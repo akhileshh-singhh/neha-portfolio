@@ -1,0 +1,17 @@
+{% extends "admin/base.html" %}
+{% load static %}
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+{% block extrastyle %}{{ block.super }}
+<script>try{localStorage.setItem('theme','light');document.documentElement.dataset.theme='light';}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'admin_cms/admin.css' %}">
+<script src="{% static 'admin_cms/preview.js' %}" defer></script>
+{% endblock %}
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}"><span class="mark">NV</span> {{ site_header|default:_('Django administration') }}</a></h1>
+{% endblock %}
+{% block nav-global %}
+<a class="view-site-pill" href="{% url 'admin:cms_section_map' %}">🗺 Page map</a>
+<a class="view-site-pill lime" href="/" target="_blank">View website ↗</a>
+{% endblock %}

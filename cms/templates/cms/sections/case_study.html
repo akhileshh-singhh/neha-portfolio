@@ -1,0 +1,5 @@
+{% load cms_tags %}
+<section class="cs{% if s.layout == 'dark' %} dk{% endif %} {{ s.css_class }}" {% include "cms/sections/_attrs.html" %}><h2>{{ s.heading|rich }}</h2>
+<div class="b">{% include "cms/sections/_ph.html" with img=s.image alt=s.image_alt|default:s.heading text=s.placeholder_text|default:"Add mockup" cls="" %}<div>
+{% for i in s.vis_items %}<p><b>{{ i.title }}:</b> {{ i.text|rich }}</p>
+{% endfor %}{% if s.footnote %}<small>{{ s.footnote }}</small>{% endif %}</div></div></section>

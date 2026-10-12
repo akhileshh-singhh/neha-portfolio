@@ -1,0 +1,21 @@
+{% extends "admin/change_form.html" %}
+{% load static %}
+{% block extrahead %}{{ block.super }}
+{{ kind_ui|json_script:"kind-ui" }}{{ content_fields|json_script:"content-fields" }}{{ item_fields|json_script:"item-fields" }}{{ slot_labels|json_script:"slot-labels" }}
+<script src="{% static 'admin_cms/section_form.js' %}" defer></script>
+{% endblock %}
+{% block content %}
+<div class="split">
+  <div class="split-form">{{ block.super }}</div>
+  <aside class="split-preview" id="blockPreview" data-block-id="{{ block_id|default:'' }}" data-dom-id="{{ block_dom_id|default:'' }}">
+    <div class="pv-head"><b>This block on the website</b>
+      {% if block_id %}<span><button type="button" class="pv-btn" data-act="reload">↻ Reload</button> <button type="button" class="pv-btn" data-act="size">⤢ Bigger</button></span>{% endif %}</div>
+    {% if block_id %}
+    <div class="pv-scroll"><div class="pv-scale"><iframe src="{% url 'cms:block_preview' block_id %}" title="Block preview" tabindex="-1"></iframe></div></div>
+    <p class="pv-hint">Shown as last saved. Colours, padding and alignment you change in the <b>Design</b> box update here instantly; text and photos update after you press Save.</p>
+    {% else %}
+    <div class="pv-empty">Choose a block type, fill in the fields and press <b>Save and continue editing</b>. A live preview of the block will appear here.</div>
+    {% endif %}
+  </aside>
+</div>
+{% endblock %}

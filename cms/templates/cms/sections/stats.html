@@ -1,0 +1,4 @@
+{% load cms_tags %}
+<section class="sl tl {{ s.css_class }}" {% include "cms/sections/_attrs.html" %}><h2>{{ s.heading|rich }}{% if s.subheading %}<br><small>{{ s.subheading }}</small>{% endif %}</h2>
+{% if s.body %}<p class="q">{{ s.body|rich }}</p>{% endif %}
+<div class="st">{% for i in s.vis_items %}<div><b>{{ i.title }}</b><span>{{ i.text }}</span></div>{% endfor %}</div></section>

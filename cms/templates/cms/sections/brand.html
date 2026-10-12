@@ -1,0 +1,6 @@
+{% load cms_tags %}
+<section class="sl ag {{ s.css_class }}" {% include "cms/sections/_attrs.html" %}>
+<div class="logo">{% if s.image %}<img src="{{ s.image.url }}" alt="{{ s.image_alt|default:s.heading }}">{% else %}{{ s.eyebrow }}{% endif %}</div>
+<div><h2>{{ s.heading|rich }}</h2>{% if s.subheading %}<small>{{ s.subheading }}</small>{% endif %}</div>
+{% if s.body %}<p>{{ s.body|rich }}</p>{% endif %}
+</section>

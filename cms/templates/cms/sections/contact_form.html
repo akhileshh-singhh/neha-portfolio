@@ -1,0 +1,9 @@
+{% load cms_tags %}
+<section class="sl cf {{ s.css_class }}" {% include "cms/sections/_attrs.html" %}>
+<h2>{{ s.heading|rich }}</h2>{% if s.body %}<p>{{ s.body|rich }}</p>{% endif %}
+{% if sent %}<div class="ok">Thank you! Your message has been sent.</div>{% endif %}
+<form method="post" action="{% url 'cms:contact' %}">{% csrf_token %}
+<input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+<input name="name" placeholder="Your name" required maxlength="120"><input type="email" name="email" placeholder="Your email" required>
+<textarea name="message" rows="5" placeholder="Your message" required maxlength="5000"></textarea>
+<button type="submit">{{ s.subheading|default:"Send message" }}</button></form></section>

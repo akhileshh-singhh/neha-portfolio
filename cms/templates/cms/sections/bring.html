@@ -1,0 +1,9 @@
+{% load cms_tags %}
+<section class="sl t3 {{ s.css_class }}" {% include "cms/sections/_attrs.html" %}>
+<h2 class="big">{{ s.heading|rich }}</h2>
+<div>{% for i in s.vis_items|by_slot:"left" %}<p>{{ i.title|rich }}</p>{% endfor %}</div>
+{% include "cms/sections/_ph.html" with img=s.image alt=s.image_alt text=s.placeholder_text|default:"Add photo" cls="" %}
+<div>{% for i in s.vis_items|by_slot:"right" %}<p>{{ i.title|rich }}</p>{% endfor %}
+{% with chips=s.vis_items|by_slot:"chip" %}{% if chips %}<div class="pl">{{ s.subheading }}<br>{% for c in chips %}<span>{{ c.title }}</span>{% endfor %}</div>{% endif %}{% endwith %}</div>
+{% if s.footnote %}<div class="foot">{{ s.footnote }}</div>{% endif %}
+</section>

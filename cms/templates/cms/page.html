@@ -1,0 +1,4 @@
+{% extends "cms/base.html" %}
+{% block body %}<main class="g">
+{% for s in sections %}{% include s.template_name %}
+{% endfor %}</main>{% endblock %}

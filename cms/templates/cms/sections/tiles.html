@@ -1,0 +1,2 @@
+{% load cms_tags %}
+<section class="neon {{ s.css_class }}" {% include "cms/sections/_attrs.html" %}>{% for i in s.vis_items %}<div{% if i.inline_style %} style="{{ i.inline_style }}"{% endif %}>{% if i.url %}<a href="{{ i.url }}" style="text-decoration:none">{{ i.title }}</a>{% else %}{{ i.title }}{% endif %}</div>{% endfor %}</section>

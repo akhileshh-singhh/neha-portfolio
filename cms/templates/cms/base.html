@@ -1,0 +1,35 @@
+{% load static cms_tags %}<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+{% if page.is_home %}{% firstof page.meta_title site.site_title as doc_title %}{% else %}{% firstof page.meta_title as doc_title %}{% endif %}
+<title>{% if doc_title %}{{ doc_title }}{% else %}{{ page.title }} | {{ site.display_name }}{% endif %}</title>
+{% firstof page.meta_description site.meta_description as doc_desc %}
+{% if doc_desc %}<meta name="description" content="{{ doc_desc }}">{% endif %}
+{% if not site.allow_search_engines or preview or not page.is_published %}<meta name="robots" content="noindex,nofollow">{% endif %}
+<link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{{ page.get_absolute_url }}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{% if doc_title %}{{ doc_title }}{% else %}{{ page.title }}{% endif %}">
+{% if doc_desc %}<meta property="og:description" content="{{ doc_desc }}">{% endif %}
+{% if page.share_image %}<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ page.share_image.url }}">
+{% elif site.share_image %}<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ site.share_image.url }}">{% endif %}
+{% if site.favicon %}<link rel="icon" href="{{ site.favicon.url }}">{% endif %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+{% if theme.google_fonts_url %}<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="{{ theme.google_fonts_url }}" rel="stylesheet">{% endif %}
+<link rel="stylesheet" href="{% static 'cms/site.css' %}">
+<style>{{ theme.css_variables|safe }}</style>
+{% if theme.custom_css %}<style id="theme-custom-css">{{ theme.custom_css|safe }}</style>{% endif %}
+{% for s in sections %}{% if s.custom_css %}<style>{{ s.safe_custom_css|safe }}</style>{% endif %}{% endfor %}
+{{ site.head_html|safe }}
+</head>
+<body>
+{% if preview %}<div class="preview-banner">Preview mode{% if not page.is_published %} · this page is a draft and not public yet{% endif %}</div>{% endif %}
+{% block body %}{% endblock %}
+{% if site.bar_enabled and page.show_hire_bar and not bare %}
+<div class="bar"><div class="av"{% if site.bar_avatar_bg %} style="background:{{ site.bar_avatar_bg }}"{% endif %}>{{ site.bar_avatar_text }}</div><span>{{ site.bar_message }}</span>{% if site.bar_primary_label and site.bar_primary_href %}<a class="h" href="{{ site.bar_primary_href }}">{{ site.bar_primary_label }}</a>{% endif %}{% if site.bar_secondary_label and site.bar_secondary_href %}<a href="{{ site.bar_secondary_href }}">{{ site.bar_secondary_label }}</a>{% endif %}</div>
+<div style="height:80px"></div>
+{% endif %}
+{{ site.body_end_html|safe }}
+</body>
+</html>

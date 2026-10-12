@@ -1,0 +1,5 @@
+{% load cms_tags %}
+<section class="sl t4 {{ s.css_class }}" {% include "cms/sections/_attrs.html" %}>
+{% for i in s.vis_items %}<div class="s"><h2>{{ i.title|rich }}</h2><p>{{ i.text|rich }}</p></div>
+{% endfor %}</section>
+{% if s.ticker_text %}<div class="tick"{% if s.ticker_speed %} style="--ticker:{{ s.ticker_speed }}s"{% endif %}><div>{{ s.ticker_text|repeat_text }}</div></div>{% endif %}

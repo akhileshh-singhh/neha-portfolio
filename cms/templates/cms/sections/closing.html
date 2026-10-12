@@ -1,0 +1,3 @@
+{% load cms_tags %}
+<section class="end {{ s.css_class }}" {% include "cms/sections/_attrs.html" %}>{% if s.eyebrow %}<div class="thumb">{{ s.eyebrow }}</div>{% endif %}<h3>{{ s.heading|rich }}</h3>{% if s.subheading %}<small>{{ s.subheading }}</small>{% endif %}
+<div class="more">{% for i in s.vis_items %}{% include "cms/sections/_ph.html" with img=i.image alt=i.title text=i.title cls="" style=i.inline_style %}{% endfor %}</div></section>

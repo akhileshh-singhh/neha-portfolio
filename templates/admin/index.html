@@ -1,0 +1,61 @@
+{% extends "admin/index.html" %}
+{% load cms_dash %}
+{% block coltype %}{% endblock %}
+{% block sidebar %}{% endblock %}
+{% block content %}
+{% dash_stats as d %}
+<div class="dash">
+  <div class="dash-hero">
+    <div><h2>Hi {{ user.first_name|default:user.username|capfirst }} 👋</h2><p>Change any text, photo, colour or section of your website from here. Save, then refresh the site.</p></div>
+    <a class="dash-cta" href="/" target="_blank">View website ↗</a>
+  </div>
+
+  {% if d.db_empty %}
+  <div class="dash-alert">
+    <div><b>Your website is currently showing its built-in default content.</b><br>Import it into the database once and every block becomes editable here.</div>
+    <form method="post" action="{% url 'import_defaults' %}">{% csrf_token %}<button type="submit">Import default content</button></form>
+  </div>
+  {% endif %}
+
+  <div class="dash-grid">
+    <div class="dash-main">
+      <div class="dash-cards">
+        <a class="dash-card" href="{% url 'admin:cms_section_map' %}"><span class="ico">🗺️</span><b>Page map</b><small>See the whole page top to bottom and jump to any block</small></a>
+        <a class="dash-card" href="{% url 'admin:cms_section_changelist' %}"><span class="ico">🧱</span><b>Page sections</b><small>{{ d.visible }} of {{ d.blocks }} visible · drag to re-order</small></a>
+        <a class="dash-card" href="{% url 'admin:cms_theme_changelist' %}"><span class="ico">🎨</span><b>Design &amp; colours</b><small>Palette, fonts, sizes, custom CSS</small></a>
+        <a class="dash-card" href="{% url 'admin:cms_sitesettings_changelist' %}"><span class="ico">⚙️</span><b>Site settings</b><small>Name, contact, SEO, hire bar</small></a>
+        <a class="dash-card" href="{% url 'admin:cms_page_changelist' %}"><span class="ico">📄</span><b>Pages</b><small>{{ d.pages }} page{{ d.pages|pluralize }} · add new pages</small></a>
+        <a class="dash-card" href="{% url 'admin:cms_asset_changelist' %}"><span class="ico">🖼️</span><b>Media library</b><small>{{ d.assets }} file{{ d.assets|pluralize }} uploaded</small></a>
+        <a class="dash-card{% if d.unread %} hot{% endif %}" href="{% url 'admin:cms_inquiry_changelist' %}"><span class="ico">✉️</span><b>Inbox</b><small>{{ d.unread }} unread · {{ d.messages }} total</small></a>
+      </div>
+
+      <div class="dash-quick">
+        <a href="{% url 'admin:cms_section_add' %}">+ Add a block</a>
+        <a href="{% url 'admin:cms_asset_add' %}">+ Upload a file</a>
+        <a href="{% url 'admin:auth_user_changelist' %}">Users &amp; logins</a>
+        <a href="{% url 'admin:password_change' %}">Change my password</a>
+      </div>
+
+      <h3 class="dash-h">Recent changes</h3>
+      {% recent_edits as edits %}
+      {% if edits %}
+      <ul class="dash-log">
+        {% for e in edits %}
+        <li><span class="dot {% if e.is_addition %}add{% elif e.is_deletion %}del{% else %}chg{% endif %}"></span>
+          <span><b>{{ e.user.get_username }}</b> {% if e.is_addition %}added{% elif e.is_deletion %}deleted{% else %}edited{% endif %}
+          {% if e.is_deletion or not e.get_admin_url %}{{ e.object_repr }}{% else %}<a href="{{ e.get_admin_url }}">{{ e.object_repr }}</a>{% endif %}
+          <small>· {{ e.content_type.name }} · {{ e.action_time|timesince }} ago</small></span></li>
+        {% endfor %}
+      </ul>
+      {% else %}<p class="dash-empty">Nothing edited yet. Start with <a href="{% url 'admin:cms_section_changelist' %}">Page sections</a>.</p>{% endif %}
+    </div>
+
+    <aside class="dash-side">
+      <div class="dash-side-head"><b>Live preview</b><a href="/" target="_blank">Open ↗</a></div>
+      <div class="dash-preview"><iframe src="/" title="Website preview" loading="lazy" tabindex="-1"></iframe></div>
+      <p class="dash-hint">Hidden blocks stay saved but disappear from the site. Use <i>*word*</i> for italics and <b>**word**</b> for bold in any text field.</p>
+    </aside>
+  </div>
+</div>
+<details class="dash-all"><summary>All data models (advanced)</summary>{{ block.super }}</details>
+{% endblock %}

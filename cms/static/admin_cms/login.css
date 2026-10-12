@@ -1,0 +1,28 @@
+*{box-sizing:border-box}
+body{margin:0;font-family:"Inter Tight","Helvetica Neue",Arial,sans-serif;background:#f4f3ef;color:#1d1c1a}
+.lg{display:grid;grid-template-columns:1.1fr 1fr;min-height:100vh}
+.lg-art{position:relative;background:radial-gradient(120% 90% at 0% 0%,#3b0a10 0%,#12090a 55%,#000 100%);color:#f4f4f1;padding:44px 56px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
+.lg-art::after{content:"";position:absolute;right:-120px;bottom:-120px;width:420px;height:420px;border-radius:50%;background:#c8ff2e;opacity:.12;filter:blur(2px)}
+.lg-mark{display:inline-grid;place-items:center;width:46px;height:46px;border-radius:50%;background:#c8ff2e;color:#000;font-weight:800;letter-spacing:-.04em}
+.lg-eyebrow{margin:0 0 14px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#c8ff2e;font-weight:600}
+.lg-art h1{margin:0 0 18px;font-size:clamp(40px,5.2vw,72px);line-height:.98;letter-spacing:-.045em;font-weight:700}
+.lg-art h1 i{font-family:Georgia,serif;font-weight:400;color:#c8ff2e}
+.lg-sub{max-width:34em;color:#c7c4bd;line-height:1.55;font-size:16px;margin:0 0 26px}
+.lg-points{list-style:none;margin:0;padding:0;display:grid;gap:10px;font-size:15px}
+.lg-points span{display:inline-block;width:30px}
+.lg-foot{margin:0;color:#8d8a84;font-size:13px;position:relative;z-index:1}
+.lg-form{display:grid;place-items:center;padding:40px}
+.lg-form form{width:min(420px,100%)}
+.lg-form h2{margin:0 0 6px;font-size:34px;letter-spacing:-.03em}
+.lg-hint{margin:0 0 28px;color:#7a766d}
+.lg-form label{display:block;margin:16px 0 6px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#7a766d;font-weight:600}
+.lg-form input[type=text],.lg-form input[type=password]{width:100%;height:46px;padding:0 14px;border:1px solid #dcd9d2;border-radius:12px;background:#fff;font:inherit;font-size:15px;color:#1d1c1a}
+.lg-form input:focus{outline:3px solid rgba(200,255,46,.7);border-color:#1d1c1a}
+.lg-pass{position:relative}.lg-pass input{padding-right:64px}
+.lg-pass button{position:absolute;right:8px;top:8px;height:30px;border:0;background:transparent;color:#7a0f1a;font:inherit;font-size:13px;font-weight:600;cursor:pointer}
+.lg-go{width:100%;margin-top:26px;height:48px;border:0;border-radius:99px;background:#111;color:#fff;font:inherit;font-weight:700;font-size:15px;letter-spacing:.04em;cursor:pointer;transition:transform .15s,background .15s}
+.lg-go:hover{background:#7a0f1a;transform:translateY(-1px)}
+.lg-back{display:block;text-align:center;margin-top:20px;color:#7a766d;font-size:13px;text-decoration:none}
+.lg-back:hover{color:#1d1c1a}
+.lg-err{background:#fde8e8;color:#8a1c1c;border-radius:10px;padding:10px 14px;font-size:14px;margin:0 0 6px}
+@media(max-width:860px){.lg{grid-template-columns:1fr}.lg-art{padding:28px 24px;min-height:260px;gap:20px}.lg-art h1{font-size:40px}.lg-points,.lg-foot{display:none}}

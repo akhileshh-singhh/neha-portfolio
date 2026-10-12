@@ -1,0 +1,7 @@
+{% load cms_tags %}
+<section class="t1 {{ s.css_class }}" {% include "cms/sections/_attrs.html" %}>
+{% if s.eyebrow %}<div class="sl-l">{{ s.eyebrow }}</div>{% endif %}
+<h1>{{ s.heading|rich }}</h1>
+{% if s.subheading %}<small>{{ s.subheading|rich }}</small>{% endif %}
+{% if s.footnote %}<div class="sl-l">{{ s.footnote }}</div>{% endif %}
+</section>
