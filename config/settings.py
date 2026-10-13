@@ -120,13 +120,12 @@ STORAGES = {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
     },
 }
 
 # FIX: Provide fallback for packages (like django-cloudinary-storage) looking for legacy settings
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
 # Uploaded images / videos.  On Render attach a persistent disk and point
 # MEDIA_ROOT at it (e.g. /var/data/media) or switch to S3/Cloudinary storage.
