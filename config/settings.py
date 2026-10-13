@@ -114,6 +114,7 @@ X_FRAME_OPTIONS = "SAMEORIGIN"  # lets the dashboard show a live preview of the 
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
+# Modern Django Storage configuration
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
@@ -122,6 +123,9 @@ STORAGES = {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
+
+# FIX: Provide fallback for packages (like django-cloudinary-storage) looking for legacy settings
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
 # Uploaded images / videos.  On Render attach a persistent disk and point
