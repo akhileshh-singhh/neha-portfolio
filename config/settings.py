@@ -120,10 +120,12 @@ STORAGES = {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+        "BACKEND": "whitenoise.storage.StaticFilesStorage", 
     },
 }
 
+# Fallback for legacy packages
+STATICFILES_STORAGE = "whitenoise.storage.StaticFilesStorage"
 # FIX: Provide fallback for packages (like django-cloudinary-storage) looking for legacy settings
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
