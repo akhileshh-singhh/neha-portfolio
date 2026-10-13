@@ -6,3 +6,5 @@ whitenoise>=6.7
 gunicorn>=22
 dj-database-url>=2.2
 psycopg2-binary>=2.9   # only used when DATABASE_URL points to Postgres
+cloudinary>=1.36.0
+django-cloudinary-storage>=0.3.0

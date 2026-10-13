@@ -48,7 +48,9 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    'cloudinary_storage',
     "django.contrib.staticfiles",
+    'cloudinary',
     "rest_framework",
     "adminsortable2",
     "cms",
@@ -111,10 +113,16 @@ X_FRAME_OPTIONS = "SAMEORIGIN"  # lets the dashboard show a live preview of the 
 
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
+
 STORAGES = {
-    "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
-    "staticfiles": {"BACKEND": "whitenoise.storage.CompressedStaticFilesStorage"},
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
 }
+
 
 # Uploaded images / videos.  On Render attach a persistent disk and point
 # MEDIA_ROOT at it (e.g. /var/data/media) or switch to S3/Cloudinary storage.
@@ -141,3 +149,9 @@ if not DEBUG:
     SESSION_COOKIE_SECURE = env_bool("COOKIE_SECURE", True)
     CSRF_COOKIE_SECURE = env_bool("COOKIE_SECURE", True)
     SECURE_CONTENT_TYPE_NOSNIFF = True
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
+}
